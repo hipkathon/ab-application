@@ -9,7 +9,7 @@ export interface RegisterAccountPayload {
   isMan: boolean
 }
 
-export class AccountStore {
+class AccountStore {
   @persist('object')
   @observable
   private account: UserEntity

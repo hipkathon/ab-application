@@ -3,6 +3,7 @@ import { View, TextInput, Pressable, Text, Platform } from 'react-native'
 import tw from 'twrnc'
 import ImagePicker from 'app/components/ImagePicker'
 import axios from 'app/utils/api'
+import AccountStore from '../stores/account';
 
 export default function Profile() {
   const [title, setTitle] = useState('')
@@ -15,11 +16,14 @@ export default function Profile() {
   const handlePress = async () => {
     if (title && images.A && images.B) {
       const formData = new FormData()
-      formData.append('file', images.A)
+      formData.append('resourceImageA', images.A)
+      formData.append('resourceImageB', images.B)
+      formData.append('title', title)
+      formData.append('userId', AccountStore.getAccount.id)
 
       try {
         console.log('FORM', formData)
-        const resp = await axios.post('/', formData, {
+        const resp = await axios.post('/articles', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
