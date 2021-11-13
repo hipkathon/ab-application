@@ -13,7 +13,7 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="home"
         component={HomeScreen}
-        options={{ title: 'Home', headerTitle: 'Hello World' }}
+        options={{ title: 'Home', headerTitle: '진행중인 투표' }}
       />
     </HomeStack.Navigator>
   )
