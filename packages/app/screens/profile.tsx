@@ -1,20 +1,36 @@
 import React, { useState, ChangeEvent } from 'react'
-import { View, TextInput, Pressable, Text } from 'react-native'
+import { View, TextInput, Pressable, Text, Platform } from 'react-native'
 import tw from 'twrnc'
 import ImagePicker from 'app/components/ImagePicker'
+import axios from 'app/utils/api'
 
 export default function Profile() {
   const [title, setTitle] = useState('')
-  const [imageA, setImageA] = useState<File>(null)
-  const [imageB, setImageB] = useState<File>(null)
+  const [images, setImages] = useState({ A: null, B: null })
 
   const handleChange = (value: string) => {
     setTitle(value)
   }
 
-  const handlePress = () => {
-    if (title && imageA && imageB) {
-      console.log('prepared')
+  const handlePress = async () => {
+    if (title && images.A && images.B) {
+      const formData = new FormData()
+      formData.append('file', images.A)
+
+      const resp = await axios.post('/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log(resp.data)
+    }
+  }
+
+  const handlePicker = (type: 'A' | 'B') => (files: FileList | string) => {
+    if (Platform.OS === 'web') {
+      setImages({ ...images, [type]: files[0] })
+    } else {
+      setImages({ ...images, [type]: files })
     }
   }
 
@@ -28,12 +44,12 @@ export default function Profile() {
         />
         <View style={tw`flex flex-row py-2`}>
           <ImagePicker
-            onChange={({ target: { files } }) => setImageA(files[0])}
+            onChange={handlePicker('A')}
             name="A"
             style={tw`flex flex-1 bg-white px-2 py-4 items-center mr-1`}
           />
           <ImagePicker
-            onChange={({ target: { files } }) => setImageB(files[0])}
+            onChange={handlePicker('B')}
             name="B"
             style={tw`flex flex-1 bg-white px-2 py-4 items-center ml-1`}
           />

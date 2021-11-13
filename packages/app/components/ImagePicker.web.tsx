@@ -5,7 +5,7 @@ import tw from 'twrnc'
 interface ImagePickerProps {
   style?: StyleProp<ViewStyle>
   name: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange: (filelist: FileList) => void
 }
 
 const ImagePicker: React.FC<ImagePickerProps> = ({ style, name, onChange }) => {
@@ -21,7 +21,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ style, name, onChange }) => {
         <Text>{name}</Text>
       </Pressable>
       <input
-        onChange={onChange}
+        onChange={({ target: { files } }) => onChange(files)}
         style={{ display: 'none' }}
         ref={inputRef}
         type="file"
