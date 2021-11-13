@@ -2,5 +2,8 @@
   "name": "app",
   "version": "1.0.0",
   "scripts": {},
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "twrnc": "^2.0.6"
+  }
 }
