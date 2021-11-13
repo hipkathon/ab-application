@@ -2,7 +2,6 @@
 import { makeTheme } from 'dripsy'
 
 const theme = makeTheme({
-  // Your theme goes here
 })
 
 type MyTheme = typeof theme

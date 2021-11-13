@@ -1,11 +1,12 @@
 import * as Linking from 'expo-linking'
 import type { NavigationContainer } from '@react-navigation/native'
-// import type { BottomTabNavigatorParams } from './bottom-tab-navigator/types'
+
 import {
   HomeStackParams,
   PlaylistsStackParams,
   ProfileStackParams
 } from './types'
+import { BootstrapStackParams } from '../pages/bootstrap';
 
 type Props = React.ComponentProps<typeof NavigationContainer>['linking']
 
@@ -33,9 +34,20 @@ function makeHomeStackPath<Path extends keyof HomeStackParams>(
   return path
 }
 
+function makeBootstrapPath<Path extends keyof BootstrapStackParams>(
+  path: Path
+): Path {
+  return path
+}
+
 function makeType<T>(t: T) {
   return t
 }
+
+const bootstrapStackPaths = makeType({
+  onboarding: makeBootstrapPath('onboarding'),
+  contents: makeBootstrapPath('contents')
+})
 
 const playlistsStackPaths = makeType({
   playlists: makePlaylistsStackPath('playlists'),
@@ -61,29 +73,43 @@ const linking: Props = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      [tabPaths.home]: {
+      [bootstrapStackPaths.onboarding]: {
         path: '',
+        initialRouteName: bootstrapStackPaths.onboarding,
+        screens: {
+          [bootstrapStackPaths.onboarding]: ''
+        }
+      },
+      [bootstrapStackPaths.contents]: {
+        path: 'contents',
         initialRouteName: homeStackPaths.home,
         screens: {
           [homeStackPaths.home]: ''
         }
       },
-      [tabPaths.playlists]: {
-        initialRouteName: playlistsStackPaths.playlists,
-        path: 'playlists',
-        screens: {
-          [playlistsStackPaths.playlists]: '',
-          [playlistsStackPaths.playlist]: ':id',
-          [playlistsStackPaths.new]: 'new'
-        }
-      },
-      [tabPaths.profile]: {
-        path: 'profile',
-        initialRouteName: profileStackPaths.profile,
-        screens: {
-          [profileStackPaths.profile]: ''
-        }
-      }
+      // [tabPaths.home]: {
+      //   path: '',
+      //   initialRouteName: homeStackPaths.home,
+      //   screens: {
+      //     [homeStackPaths.home]: ''
+      //   }
+      // },
+      // [tabPaths.playlists]: {
+      //   initialRouteName: playlistsStackPaths.playlists,
+      //   path: 'playlists',
+      //   screens: {
+      //     [playlistsStackPaths.playlists]: '',
+      //     [playlistsStackPaths.playlist]: ':id',
+      //     [playlistsStackPaths.new]: 'new'
+      //   }
+      // },
+      // [tabPaths.profile]: {
+      //   path: 'profile',
+      //   initialRouteName: profileStackPaths.profile,
+      //   screens: {
+      //     [profileStackPaths.profile]: ''
+      //   }
+      // }
     }
   }
 }
