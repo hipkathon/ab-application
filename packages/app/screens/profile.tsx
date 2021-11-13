@@ -17,12 +17,17 @@ export default function Profile() {
       const formData = new FormData()
       formData.append('file', images.A)
 
-      const resp = await axios.post('/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      console.log(resp.data)
+      try {
+        console.log('FORM', formData)
+        const resp = await axios.post('/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        console.log(resp.data)
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
