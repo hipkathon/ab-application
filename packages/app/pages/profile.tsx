@@ -13,7 +13,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="profile"
         component={ProfileScreen}
-        options={{ title: 'Profile', headerTitle: 'Profile' }}
+        options={{ title: 'Profile', headerTitle: 'Ask' }}
       />
     </ProfileStack.Navigator>
   )
