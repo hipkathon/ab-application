@@ -1,12 +1,12 @@
 import React from 'react'
 import { Platform } from 'react-native'
 
-import createStackNavigator from 'app/navigation/create-stack-navigator'
-import PlaylistsScreen from 'app/screens/playlists'
-import PlaylistScreen from 'app/screens/playlist'
-import NewPlaylistScreen from 'app/screens/new-playlist'
-import { PlaylistsStackParams } from 'app/navigation/types'
-import { navigatorScreenOptions } from 'app/navigation/navigator-screen-options'
+import createStackNavigator from 'packages/app/navigation/create-stack-navigator'
+import PlaylistsScreen from 'packages/app/screens/playlists'
+import PlaylistScreen from 'packages/app/screens/playlist'
+import NewPlaylistScreen from 'packages/app/screens/new-playlist'
+import { PlaylistsStackParams } from 'packages/app/navigation/types'
+import { navigatorScreenOptions } from 'packages/app/navigation/navigator-screen-options'
 
 const PlaylistsStack = createStackNavigator<PlaylistsStackParams>()
 

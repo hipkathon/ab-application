@@ -1,7 +1,7 @@
 import React from 'react'
 
 import createStackNavigator from 'app/navigation/create-stack-navigator'
-import ProfileScreen from 'app/screens/profile'
+import ProfileScreen from 'packages/app/pages/contents/profile'
 import { ProfileStackParams } from 'app/navigation/types'
 import { navigatorScreenOptions } from 'app/navigation/navigator-screen-options'
 
