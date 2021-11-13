@@ -11,7 +11,8 @@ const withTM = require('next-transpile-modules')([
   '@gorhom/portal',
   'dripsy',
   '@dripsy/core',
-  'expo-next-react-navigation'
+  'expo-next-react-navigation',
+  'twrnc'
 ])
 
 const nextConfig = {
