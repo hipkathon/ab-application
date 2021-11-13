@@ -1,26 +1,31 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import type { NextComponentType, NextPageContext } from 'next'
 
-type PlaylistsStackParams = {
+type BootstrapStackParams = {
+  onboarding: undefined
+  contents: undefined
+}
+
+type PublishStackParams = {
   playlists: undefined
   playlist: { id: string }
   new: undefined
 }
 
-type HomeStackParams = {
-  home: undefined
+type FeedStackParams = {
+  news: undefined
 }
 
 type ProfileStackParams = {
-  profile: { user?: unknown }
+  main: { user?: unknown }
 }
 
 type PlaylistsScreenProps = NativeStackScreenProps<
-  PlaylistsStackParams,
+  PublishStackParams,
   'playlists'
 >
 type PlaylistScreenProps = NativeStackScreenProps<
-  PlaylistsStackParams,
+  PublishStackParams,
   'playlist'
 >
 
@@ -34,7 +39,8 @@ export type {
   PlaylistsScreenProps,
   PlaylistScreenProps,
   NextNavigationProps,
-  PlaylistsStackParams,
-  HomeStackParams,
-  ProfileStackParams
+  ProfileStackParams,
+  BootstrapStackParams,
+  FeedStackParams,
+  PublishStackParams
 }

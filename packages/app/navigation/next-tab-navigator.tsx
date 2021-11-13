@@ -5,9 +5,9 @@ import { TabBarIcon } from 'app/navigation/tab-bar-icon'
 import { NextNavigationProps } from './types'
 import { createNextTabNavigator } from './universal-tab-navigator'
 
-const HomeNavigator = dynamic(() => import('../pages/home'))
-const PlaylistsNavigator = dynamic(() => import('../pages/playlists'))
-const ProfileNavigator = dynamic(() => import('../pages/profile'))
+const FeedNavigator = dynamic(() => import('../pages/contents/feed'))
+const PublishNavigator = dynamic(() => import('../pages/contents/publish'))
+const ProfileNavigator = dynamic(() => import('../pages/contents/profile'))
 
 const BottomTab = createNextTabNavigator()
 
@@ -17,7 +17,7 @@ export function NextTabNavigator({
 }: NextNavigationProps) {
   return (
     <BottomTab.Navigator
-      initialRouteName="homeTab"
+      initialRouteName="feed"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#fff',
@@ -35,21 +35,21 @@ export function NextTabNavigator({
       pageProps={pageProps}
     >
       <BottomTab.Screen
-        name="homeTab"
-        component={HomeNavigator}
+        name="feed"
+        component={FeedNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />
         }}
       />
       <BottomTab.Screen
-        name="playlistsTab"
-        component={PlaylistsNavigator}
+        name="publish"
+        component={PublishNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="disc" color={color} />
         }}
       />
       <BottomTab.Screen
-        name="profileTab"
+        name="profile"
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="smile" color={color} />

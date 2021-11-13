@@ -48,7 +48,7 @@ export class AccountStore {
 const store = new AccountStore();
 
 if (typeof window !== 'undefined') {
-  hydrate('account', store);
+  hydrate('account#10', store);
 }
 
 export default store;

@@ -1,18 +1,10 @@
-import React, { useRef, useMemo, useEffect } from 'react'
-import {
-  NavigationContainer,
-  useLinkTo,
-  LinkingOptions,
-  useNavigation
-} from '@react-navigation/native'
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import React, { useEffect, useMemo, useRef } from 'react';
+import { LinkingOptions, NavigationContainer, useLinkTo } from '@react-navigation/native';
 
-import { linking } from 'app/navigation/linking'
-import type { NextNavigationProps } from 'app/navigation/types'
-import Router from 'next/router'
-import { Platform } from 'react-native'
-import { NextTabNavigator } from 'app/navigation/next-tab-navigator'
-import { createStackNavigator } from '@react-navigation/stack';
+import { linking } from 'app/navigation/linking';
+import type { NextNavigationProps } from 'app/navigation/types';
+import Router from 'next/router';
+import { Platform } from 'react-native';
 import Bootstrap from '../pages';
 
 function LinkTo() {
@@ -73,11 +65,11 @@ export function Navigation({ Component, pageProps }: NextNavigationProps) {
       documentTitle={{
         enabled: true,
         formatter: (options) =>
-          options?.title ? `${options.title} - Record Pool` : 'Record Pool'
+          options?.title ? `${options.title}` : 'Record Pool'
       }}
     >
       <LinkTo />
-      <Bootstrap />
+      <Bootstrap Component={Component} pageProps={pageProps} />
     </NavigationContainer>
   )
 }

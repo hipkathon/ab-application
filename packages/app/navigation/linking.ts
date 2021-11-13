@@ -1,12 +1,12 @@
 import * as Linking from 'expo-linking'
 import type { NavigationContainer } from '@react-navigation/native'
-
 import {
-  HomeStackParams,
-  PlaylistsStackParams,
-  ProfileStackParams
-} from './types'
-import { BootstrapStackParams } from '../pages/bootstrap';
+  PublishStackParams,
+  PlaylistScreenProps,
+  ProfileStackParams,
+  BootstrapStackParams, FeedStackParams
+} from './types';
+import AccountStore from '../stores/account';
 
 type Props = React.ComponentProps<typeof NavigationContainer>['linking']
 
@@ -16,7 +16,7 @@ function makeTabPath<Path extends keyof any>(
   return path
 }
 
-function makePlaylistsStackPath<Path extends keyof PlaylistsStackParams>(
+function makePublishStackPath<Path extends keyof PublishStackParams>(
   path: Path
 ): Path {
   return path
@@ -28,13 +28,13 @@ function makeProfileStackPath<Path extends keyof ProfileStackParams>(
   return path
 }
 
-function makeHomeStackPath<Path extends keyof HomeStackParams>(
+function makeBootstrapStackPath<Path extends keyof BootstrapStackParams>(
   path: Path
 ): Path {
   return path
 }
 
-function makeBootstrapPath<Path extends keyof BootstrapStackParams>(
+function makeFeedStackPath<Path extends keyof FeedStackParams>(
   path: Path
 ): Path {
   return path
@@ -45,28 +45,28 @@ function makeType<T>(t: T) {
 }
 
 const bootstrapStackPaths = makeType({
-  onboarding: makeBootstrapPath('onboarding'),
-  contents: makeBootstrapPath('contents')
+  onboarding: makeBootstrapStackPath('onboarding'),
+  contents: makeBootstrapStackPath('contents')
 })
 
-const playlistsStackPaths = makeType({
-  playlists: makePlaylistsStackPath('playlists'),
-  playlist: makePlaylistsStackPath('playlist'),
-  new: makePlaylistsStackPath('new')
+const publishStackPaths = makeType({
+  playlists: makePublishStackPath('playlists'),
+  playlist: makePublishStackPath('playlist'),
+  new: makePublishStackPath('new')
 })
 
 const profileStackPaths = makeType({
-  profile: makeProfileStackPath('profile')
+  main: makeProfileStackPath('main')
 })
 
-const homeStackPaths = makeType({
-  home: makeHomeStackPath('home')
+const feedStackPaths = makeType({
+  news: makeFeedStackPath('news')
 })
 
 const tabPaths = makeType({
-  home: makeTabPath('homeTab'),
-  playlists: makeTabPath('playlistsTab'),
-  profile: makeTabPath('profileTab')
+  feed: makeTabPath('feed'),
+  publish: makeTabPath('publish'),
+  profile: makeTabPath('profile')
 })
 
 const linking: Props = {
@@ -77,38 +77,116 @@ const linking: Props = {
         path: '',
         initialRouteName: bootstrapStackPaths.onboarding,
         screens: {
-          [bootstrapStackPaths.onboarding]: ''
+          [bootstrapStackPaths.onboarding]: '',
         }
       },
       [bootstrapStackPaths.contents]: {
         path: 'contents',
-        initialRouteName: homeStackPaths.home,
+        initialRouteName: tabPaths.feed,
         screens: {
-          [homeStackPaths.home]: ''
+          [tabPaths.feed]: {
+            path: 'feed',
+            initialRouteName: feedStackPaths.news,
+            screens: {
+              [feedStackPaths.news]: '',
+            }
+          },
+          [tabPaths.publish]: {
+            path: 'publish',
+            initialRouteName: publishStackPaths.playlist,
+            screens: {
+              [publishStackPaths.playlist]: 'playlist',
+              [publishStackPaths.playlists]: 'playlists',
+              [publishStackPaths.new]: 'new',
+            }
+          },
+          [tabPaths.profile]: {
+            path: 'profile',
+            initialRouteName: profileStackPaths.main,
+            screens: {
+              [profileStackPaths.main]: ''
+            }
+          }
         }
       },
-      // [tabPaths.home]: {
-      //   path: '',
-      //   initialRouteName: homeStackPaths.home,
+      // [tabPaths.feed]: {
+      //   path: 'contents/feed',
+      //   initialRouteName: feedStackPaths.news,
       //   screens: {
-      //     [homeStackPaths.home]: ''
+      //     [tabPaths.feed]: {
+      //       path: '',
+      //       initialRouteName: feedStackPaths.news,
+      //       screens: {
+      //         [feedStackPaths.news]: '',
+      //       }
+      //     },
       //   }
       // },
-      // [tabPaths.playlists]: {
-      //   initialRouteName: playlistsStackPaths.playlists,
-      //   path: 'playlists',
+      // [bootstrapStackPaths.contents]: {
+      //   path: 'contents',
+      //   initialRouteName: tabPaths.feed,
       //   screens: {
-      //     [playlistsStackPaths.playlists]: '',
-      //     [playlistsStackPaths.playlist]: ':id',
-      //     [playlistsStackPaths.new]: 'new'
+      //     [tabPaths.feed]: {
+      //       path: '',
+      //       initialRouteName: feedStackPaths.news,
+      //       screens: {
+      //         [feedStackPaths.news]: '',
+      //       }
+      //     },
       //   }
       // },
-      // [tabPaths.profile]: {
-      //   path: 'profile',
-      //   initialRouteName: profileStackPaths.profile,
+      // [bootstrapStackPaths.contents]: {
+      //   path: 'contents',
+      //   initialRouteName: tabPaths.feed,
       //   screens: {
-      //     [profileStackPaths.profile]: ''
+      //     [tabPaths.feed]: {
+      //       path: '',
+      //       initialRouteName: feedStackPaths.news,
+      //       screens: {
+      //         [feedStackPaths.news]: ''
+      //       }
+      //     },
       //   }
+        // }
+        // [tabPaths.publish]: {
+        //       path: '',
+        //       initialRouteName: '',
+        //       screens: {
+        //         [tabPaths.publish]: ''
+        //       }
+        //     },
+        //     [tabPaths.profile]: {
+        //       path: '',
+        //       initialRouteName: '',
+        //       screens: {
+        //         [profileStackPaths.main]: ''
+        //       }
+        //     }
+        //   }
+        // },
+        // [tabPaths.home]: {
+        //   path: '',
+        //   initialRouteName: homeStackPaths.home,
+        //   screens: {
+        //     [homeStackPaths.home]: ''
+        //   }
+        // },
+        // [tabPaths.publish]: {
+        //   initialRouteName: playlistsStackPaths.publish,
+        //   path: 'publish',
+        //   screens: {
+        //     [playlistsStackPaths.publish]: '',
+        //     [playlistsStackPaths.playlist]: ':id',
+        //     [playlistsStackPaths.new]: 'new'
+        //   }
+        // },
+        // [tabPaths.profile]: {
+        //   path: 'profile',
+        //   initialRouteName: profileStackPaths.profile,
+        //   screens: {
+        //     [profileStackPaths.profile]: ''
+        //   }
+        // }
       // }
     }
   }

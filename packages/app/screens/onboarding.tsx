@@ -1,21 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import AccountStore, { RegisterAccountPayload } from '../../stores/account';
+import AccountStore, { RegisterAccountPayload } from '../stores/account';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { observer } from 'mobx-react';
 import dayjs from 'dayjs';
 import tw from 'twrnc';
-import { useRouter } from '../../navigation/use-router';
+import { useRouter }  from 'app/navigation/use-router'
 
 export function Onboarding() {
-  const router = useRouter()
+  const router = useRouter();
   const [birthday, setBirthday] = useState('')
   const [isMan, setIsMan] = useState(null)
-
-  useEffect(() => {
-    if (AccountStore.getAccount) {
-      router.replace('/contents')
-    }
-  }, [])
 
   const onBirthdayChange = useCallback((event) => {
     const year = parseInt(event.replace(/[^0-9]/g, ''))
@@ -27,7 +21,8 @@ export function Onboarding() {
   }, [])
 
   const requestPayload = useMemo(() => ({
-    birthday: dayjs(`${birthday}-01-01 12:00:00`).format('YYYY-MM-DD HH:mm:ss'),
+    birthday: dayjs(`${birthday}-01-01 12:00:00`)
+      .format('YYYY-MM-DD HH:mm:ss'),
     isMan
   } as RegisterAccountPayload), [isMan, birthday])
 
@@ -35,8 +30,7 @@ export function Onboarding() {
     if (requestPayload.isMan !== null && requestPayload.birthday) {
       const registeredAccount = await AccountStore.setAccount(requestPayload)
       if (registeredAccount) {
-        console.log('navigation move', registeredAccount.id)
-        router.replace('contents')
+        router.replace('/contents/feed')
       }
     }
   }, [requestPayload])

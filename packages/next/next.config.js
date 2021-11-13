@@ -16,6 +16,9 @@ const withTM = require('next-transpile-modules')([
 ])
 
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true
+  },
   images: {
     disableStaticImages: true
   },

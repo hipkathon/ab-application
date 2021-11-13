@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, Pressable, Text } from 'react-native'
 import tw from 'twrnc'
 
-export default function ProfileScreen() {
+export default function Profile() {
   return (
     <View style={tw`flex flex-1 flex-col`}>
       <View style={tw`flex flex-1 px-2 justify-center`}>
