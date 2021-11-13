@@ -25,11 +25,16 @@ function BootstrapStackNavigator({
         screenOptions={navigatorScreenOptions}
         initialRouteName={AccountStore.getAccount ? 'contents' : 'onboarding'}
       >
-        <BootstrapStack.Screen
-          name={'onboarding'}
-          component={Onboarding}
-          options={{ headerShown: false }}
-        />
+        {
+          AccountStore.getAccount ?
+            null
+            :
+          <BootstrapStack.Screen
+            name={'onboarding'}
+            component={Onboarding}
+            options={{ headerShown: false }}
+          />
+        }
         <BootstrapStack.Screen
           name={'contents'}
           component={Contents}
