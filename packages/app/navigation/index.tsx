@@ -2,7 +2,8 @@ import React, { useRef, useMemo, useEffect } from 'react'
 import {
   NavigationContainer,
   useLinkTo,
-  LinkingOptions
+  LinkingOptions,
+  useNavigation
 } from '@react-navigation/native'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
@@ -11,6 +12,8 @@ import type { NextNavigationProps } from 'app/navigation/types'
 import Router from 'next/router'
 import { Platform } from 'react-native'
 import { NextTabNavigator } from 'app/navigation/next-tab-navigator'
+import { createStackNavigator } from '@react-navigation/stack';
+import Bootstrap from '../pages';
 
 function LinkTo() {
   const linkTo = useLinkTo()
@@ -60,9 +63,9 @@ export function Navigation({ Component, pageProps }: NextNavigationProps) {
         dark: true,
         colors: {
           primary: 'rgb(255, 255, 255)',
-          background: 'rgb(0, 0, 0)',
+          background: '#202020',
           card: 'rgb(0, 0, 0)',
-          text: 'rgb(255, 255, 255)',
+          text: 'rgb(222, 255, 255)',
           border: 'rgb(39, 39, 41)',
           notification: 'rgb(255, 69, 58)'
         }
@@ -74,9 +77,7 @@ export function Navigation({ Component, pageProps }: NextNavigationProps) {
       }}
     >
       <LinkTo />
-      <BottomSheetModalProvider>
-        <NextTabNavigator Component={Component} pageProps={pageProps} />
-      </BottomSheetModalProvider>
+      <Bootstrap />
     </NavigationContainer>
   )
 }

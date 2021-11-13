@@ -1,3 +1,3 @@
-import Home from './home'
+import Bootstrap from './bootstrap'
 
-export default Home
+export default Bootstrap
